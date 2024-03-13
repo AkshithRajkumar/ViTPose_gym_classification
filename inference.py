@@ -115,7 +115,7 @@ def main(image_folder, output_folder):
         if filename.endswith('.jpg'):
             image_path = os.path.join(image_folder, filename)
             keypoints = inference(img_path=image_path, model_cfg=model_cfg, ckpt_path=CKPT_PATH, 
-                                    device=torch.device("cuda") if torch.cuda.is_available()) else torch.device('cpu'),)
+                                    device=torch.device("cuda") if torch.cuda.is_available() else torch.device('cpu'),)
             
             keypoints = keypoints.squeeze()
 
