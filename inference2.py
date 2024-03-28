@@ -1,7 +1,7 @@
 import os
 
 import torch
-import argparse
+
 from pathlib import Path
 import cv2
 import numpy as np
@@ -81,12 +81,9 @@ def inference(img_path: Path, model_cfg: dict, ckpt_path: Path, device: torch.de
         img = np.array(img)[:, :, ::-1] 
         img = draw_points_and_skeleton(img.copy(), point, joints_dict()['coco']['skeleton'], person_index=pid,
                                         points_color_palette='gist_rainbow', skeleton_color_palette='jet',
-                                        points_palette_samples=10, confidence_threshold=0)
+                                        points_palette_samples=10, confidence_threshold=0.4)
         
-        # print(img_path)
-        # print(img_path.replace(".jpg", "_result.jpg"))
-        # save_name = img_path.replace(".jpg", "_result.jpg").split("person/")[1]
-        save_name = img_path.replace(".jpg", "_result.jpg").split("person")[1][1:]
+        save_name = img_path.replace(".jpg", "_result.jpg").split("tracklet/")[1]
 
         output_folder = os.path.join(save_folder_name, save_dir)
         os.makedirs(output_folder, exist_ok=True)
@@ -97,24 +94,19 @@ def inference(img_path: Path, model_cfg: dict, ckpt_path: Path, device: torch.de
 
     return points
 
-def main(input_folder, model_path, i):
-#def main():
+def main(input_folder, i):
     # CKPT_PATH = "/content/drive/MyDrive/Colab Notebooks/MIE1517 Project/vitpose-b-multi-coco.pth"
-    # CKPT_PATH = r"C:\Users\Akshith\Documents\GitHub\ViTPose\vitpose-b-multi-coco.pth"
-    CKPT_PATH = model_path
+    CKPT_PATH = r"C:\Users\Akshith\Documents\GitHub\ViTPose\vitpose-b-multi-coco.pth"
+
     save_folder_name = input_folder.split(".")[0]
-    # save_folder_name = "person1"
     if not os.path.exists(save_folder_name):
         os.makedirs(save_folder_name)
 
 
-    # image_folder = vid_to_img(input_folder, save_folder_name)
-    image_folder = input_folder
+    image_folder = vid_to_img(input_folder, save_folder_name)
 
     kp_f = []
-
-    # sorted_images = sorted(os.listdir(image_folder), key=lambda f: int(re.findall(r'\d+', f)[-1]))
-    sorted_images = sorted(os.listdir(image_folder), key=lambda f: int(os.path.splitext(f)[0]))
+    sorted_images = sorted(os.listdir(image_folder), key=lambda f: int(re.findall(r'\d+', f)[-1]))
 
     for _, filename in tqdm(enumerate(sorted_images)):
         image_path = os.path.join(image_folder, filename)
@@ -125,26 +117,19 @@ def main(input_folder, model_path, i):
         
         kp_f.append(keypoints)
     
-    output_path = os.path.join(save_folder_name, f"crop_test.npz")
+    output_path = os.path.join(save_folder_name, f"squat_{i}.npz")
 
     np.savez(output_path, reconstruction=kp_f)
 
 
 if __name__ == "__main__":
 
-    # for i in range(24,32):
-    #     input_folder = f"Deadlift_Cropped\Deadlift_Cropped{i}.mp4"
-    #     img_size = data_cfg['image_size']
-    #     print("video:",i)
-    #     main(input_folder, i)
+    for i in range(1,23):
+        input_folder = f"final_squats\squat_{i}.mp4"
+        img_size = data_cfg['image_size']
+        print("video:",i)
+        main(input_folder, i)
     # input_folder = "v140.mp4"
-    img_size = data_cfg['image_size']
+    # img_size = data_cfg['image_size']
 
-    parser = argparse.ArgumentParser(description="Process input folder path and model path")
-    parser.add_argument("--input_folder", help="Path to the input folder", required=True)
-    parser.add_argument("--model_path", help="Path to the model", required=True)
-    args = parser.parse_args()
-    main(args.input_folder, args.model_path, i =1)
-
-    # main(input_folder,i=1)
-    # main()
+    # main(input_folder)
