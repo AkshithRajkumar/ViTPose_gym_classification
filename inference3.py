@@ -110,9 +110,10 @@ def main(input_folder, i):
 
     for _, filename in tqdm(enumerate(sorted_images)):
         image_path = os.path.join(image_folder, filename)
+        device_check = torch.device("cuda") if torch.cuda.is_available() else torch.device('cpu')
         keypoints = inference(img_path=image_path, model_cfg=model_cfg, ckpt_path=CKPT_PATH, 
-                                device=torch.device("cuda") if torch.cuda.is_available() else torch.device('cpu'),save_folder_name=save_folder_name)
-        
+                                device=device_check, save_folder_name=save_folder_name)
+        # print(device_check)
         keypoints = keypoints.squeeze()
         
         kp_f.append(keypoints)
