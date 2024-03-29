@@ -95,8 +95,8 @@ def inference(img_path: Path, model_cfg: dict, ckpt_path: Path, device: torch.de
     return points
 
 def main(input_folder, i):
-    # CKPT_PATH = "/content/drive/MyDrive/Colab Notebooks/MIE1517 Project/vitpose-b-multi-coco.pth"
-    CKPT_PATH = r"C:\Users\Akshith\Documents\GitHub\ViTPose\vitpose-b-multi-coco.pth"
+    CKPT_PATH = "/content/drive/MyDrive/Colab Notebooks/MIE1517 Project/vitpose-b-multi-coco.pth"
+    #CKPT_PATH = r"C:\Users\Akshith\Documents\GitHub\ViTPose\vitpose-b-multi-coco.pth"
 
     save_folder_name = input_folder.split(".")[0]
     if not os.path.exists(save_folder_name):
