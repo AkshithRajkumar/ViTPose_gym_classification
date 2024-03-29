@@ -81,7 +81,7 @@ def inference(img_path: Path, model_cfg: dict, ckpt_path: Path, device: torch.de
         img = np.array(img)[:, :, ::-1] 
         img = draw_points_and_skeleton(img.copy(), point, joints_dict()['coco']['skeleton'], person_index=pid,
                                         points_color_palette='gist_rainbow', skeleton_color_palette='jet',
-                                        points_palette_samples=10, confidence_threshold=0.4)
+                                        points_palette_samples=10, confidence_threshold=0.0)
         
         save_name = img_path.replace(".jpg", "_result.jpg").split("tracklet/")[1]
 
@@ -117,15 +117,15 @@ def main(input_folder, i):
         
         kp_f.append(keypoints)
     
-    output_path = os.path.join(save_folder_name, f"squat_{i}.npz")
+    output_path = os.path.join(save_folder_name, f"s_{i}.npz")
 
     np.savez(output_path, reconstruction=kp_f)
 
 
 if __name__ == "__main__":
 
-    for i in range(1,23):
-        input_folder = f"final_squats\squat_{i}.mp4"
+    for i in range(1,52):
+        input_folder = f"squats\s_{i}.mp4"
         img_size = data_cfg['image_size']
         print("video:",i)
         main(input_folder, i)
