@@ -1,5 +1,5 @@
 import os
-
+import argparse
 import torch
 
 from pathlib import Path
@@ -125,11 +125,19 @@ def main(input_folder, i):
 
 if __name__ == "__main__":
 
-    for i in range(1,52):
-        input_folder = f"deadlift\d_{i}.mp4"
+    parser = argparse.ArgumentParser(description="Process input folder path and model path")
+    parser.add_argument("--input_folder", help="Path to the input folder", required=True)
+    args = parser.parse_args()
+    input_folder = args.input_folder
+
+    for i in range(1, 52):
+        input_file = os.path.join(input_folder, f"d_{i}.mp4")
+        
+        # You can add the code to process the video here
         img_size = data_cfg['image_size']
-        print("video:",i)
-        main(input_folder, i)
+        print("Processing video:", input_file)
+        main(input_file, i)
+
     # input_folder = "v140.mp4"
     # img_size = data_cfg['image_size']
 
