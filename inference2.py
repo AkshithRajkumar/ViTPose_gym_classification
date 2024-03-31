@@ -1,5 +1,5 @@
 import os
-
+import argparse
 import torch
 
 from pathlib import Path
@@ -117,20 +117,25 @@ def main(input_folder, i):
         
         kp_f.append(keypoints)
     
-    output_path = os.path.join(save_folder_name, f"sn_N_{i}.npz")
+    output_path = os.path.join(save_folder_name, f"fi_{i}.npz")
 
     np.savez(output_path, reconstruction=kp_f)
 
 
 if __name__ == "__main__":
 
-    for i in range(28,29):
-        # input_folder = f"squats\s_{i}.mp4"
-        input_folder = f"snatch\Snatch_N_{i}.mp4"
-        img_size = data_cfg['image_size']
-        print("video:",i)
-        main(input_folder, i)
+    # for i in range(28,29):
+    #     # input_folder = f"squats\s_{i}.mp4"
+    #     input_folder = f"snatch\Snatch_N_{i}.mp4"
+    #     img_size = data_cfg['image_size']
+    #     print("video:",i)
+    #     main(input_folder, i)
     # input_folder = "v140.mp4"
-    # img_size = data_cfg['image_size']
+    img_size = data_cfg['image_size']
 
     # main(input_folder)
+    parser = argparse.ArgumentParser(description="Process input folder path and model path")
+    parser.add_argument("--input_folder", help="Path to the input folder", required=True)
+    # parser.add_argument("--model_path", help="Path to the model", required=True)
+    args = parser.parse_args()
+    main(args.input_folder, i =1)

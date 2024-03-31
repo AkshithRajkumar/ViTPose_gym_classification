@@ -109,8 +109,8 @@ def main(input_folder, i):
         os.makedirs(save_folder_name)
 
 
-    # image_folder = vid_to_img(input_folder, save_folder_name)
-    image_folder = input_folder
+    image_folder = vid_to_img(input_folder, save_folder_name)
+    # image_folder = input_folder
 
     kp_f = []
 
@@ -126,7 +126,7 @@ def main(input_folder, i):
         
         kp_f.append(keypoints)
     
-    output_path = os.path.join(save_folder_name, f"squats_{i}.npz")
+    output_path = os.path.join(save_folder_name, f"test_{i}.npz")
 
     np.savez(output_path, reconstruction=kp_f)
 
