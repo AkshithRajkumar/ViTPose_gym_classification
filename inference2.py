@@ -117,15 +117,16 @@ def main(input_folder, i):
         
         kp_f.append(keypoints)
     
-    output_path = os.path.join(save_folder_name, f"s_{i}.npz")
+    output_path = os.path.join(save_folder_name, f"sn_N_{i}.npz")
 
     np.savez(output_path, reconstruction=kp_f)
 
 
 if __name__ == "__main__":
 
-    for i in range(1,52):
-        input_folder = f"squats\s_{i}.mp4"
+    for i in range(28,29):
+        # input_folder = f"squats\s_{i}.mp4"
+        input_folder = f"snatch\Snatch_N_{i}.mp4"
         img_size = data_cfg['image_size']
         print("video:",i)
         main(input_folder, i)

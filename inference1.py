@@ -99,8 +99,8 @@ def inference(img_path: Path, model_cfg: dict, ckpt_path: Path, device: torch.de
 
 def main(input_folder, i):
 #def main():
-    # CKPT_PATH = "/content/drive/MyDrive/Colab Notebooks/MIE1517 Project/vitpose-b-multi-coco.pth"
-    CKPT_PATH = r"C:\Users\Akshith\Documents\GitHub\ViTPose\vitpose-b-multi-coco.pth"
+    CKPT_PATH = "/content/drive/MyDrive/Colab Notebooks/MIE1517 Project/vitpose-b-multi-coco.pth"
+    # CKPT_PATH = r"C:\Users\Akshith\Documents\GitHub\ViTPose\vitpose-b-multi-coco.pth"
     # CKPT_PATH = model_path
     
     save_folder_name = input_folder.split(".")[0]
@@ -133,19 +133,19 @@ def main(input_folder, i):
 
 if __name__ == "__main__":
 
-    for i in range(1,52):
-        input_folder = f"squats\s_{i}.mp4"
-        img_size = data_cfg['image_size']
-        print("video:",i)
-        main(input_folder, i)
+    # for i in range(1,52):
+    #     input_folder = f"squats\s_{i}.mp4"
+    #     img_size = data_cfg['image_size']
+    #     print("video:",i)
+    #     main(input_folder, i)
     # input_folder = "v140.mp4"
-    # img_size = data_cfg['image_size']
+    img_size = data_cfg['image_size']
 
-    # parser = argparse.ArgumentParser(description="Process input folder path and model path")
-    # parser.add_argument("--input_folder", help="Path to the input folder", required=True)
+    parser = argparse.ArgumentParser(description="Process input folder path and model path")
+    parser.add_argument("--input_folder", help="Path to the input folder", required=True)
     # parser.add_argument("--model_path", help="Path to the model", required=True)
-    # args = parser.parse_args()
-    # main(args.input_folder, args.model_path, i =1)
+    args = parser.parse_args()
+    main(args.input_folder, i =1)
 
     # main(input_folder,i=1)
     # main()
