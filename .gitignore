@@ -5,3 +5,6 @@
 *.onnx
 .DS_Store
 runs
+*.jpg
+*.mp4
+*.npz
